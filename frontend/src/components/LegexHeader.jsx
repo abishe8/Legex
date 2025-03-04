@@ -27,7 +27,7 @@ function LegexHeader() {
                      <img src="/assets/LegEX_logo.svg" alt="Legex logo" />
                   </div>
                </Link>
-               {isAuthenticated ? (
+               {isAuthenticated && user?.isVerified ? (
                   <>
                      <div
                         onClick={() => setIsOpen(!isOpen)}
