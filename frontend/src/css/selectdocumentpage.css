@@ -1,0 +1,74 @@
+.doc-type-page{
+    padding: 30px 10px;
+    padding-top: 50px;
+}
+.doc-type-page-wrapper{
+    padding: 20px 0;
+    text-align: center;
+    border: 1px solid rgb(212, 211, 211);
+    border-radius: 5px;
+}
+.doc-type-page-wrapper h2{
+    font-weight: 400;
+    max-width: fit-content;
+    margin: 5px auto;
+    color: #373737;
+    position: relative;
+    font-size: 28px;
+
+}
+.doc-type-page-wrapper h2::after{
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    background-color: #373737;
+    bottom: 0;
+    left: 0%;
+}
+
+.doc-types{
+    max-width: fit-content;
+    margin: 20px auto;
+    margin-top: 30px;
+
+}
+.doc-types div{
+    text-align: left;
+    margin: 20px auto;
+}
+.doc-types div input{
+    margin-right: 10px;
+}
+.doc-types div label{
+    font-weight: 600;
+    color: gray;
+    font-size: 20px;
+}
+
+.continue-btn{
+    background-color: #3d74d9;
+    padding: 10px 20px;
+    border-radius: 7px;
+    font-weight: 600;
+    color: white;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+@media (max-width: 990px){
+    .doc-type-page-wrapper{
+        padding: 0 10px;
+    }
+    .doc-type-page-wrapper h2{
+        font-size: 25px;
+    }
+    .doc-types div label{
+        font-size: 17px;
+    }
+}
+@media (max-width: 550px){
+    .doc-type-page-wrapper h2{
+        font-size: 22px;
+    }
+}

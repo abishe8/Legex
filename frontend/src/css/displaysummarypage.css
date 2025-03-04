@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+.display-summary-page{
+    padding: 40px 0;
+}
+.display-summary-wrapper{
+    border: 1px solid #626060;
+    padding: 10px;
+    text-align: center;
+
+}
+.display-summary-wrapper h2{
+    width: fit-content;
+    color: #2956aa;
+    font-weight: 500;
+    border: 1px solid #626060;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.download-btn{
+    background-color: #4077db;
+    color: white;
+    padding: 10px 0;
+    width: 100%;
+    max-width: 250px;
+    border: none;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 0 20px;
+}
+
+.summary-english{
+    border: 10px solid #a7d9fe;
+    background-color: #edf8fe;
+    border-radius: 10px;
+    padding: 30px 20px 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.summary-english h3{
+    color: #537ecd;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+.summary-english p{
+    font-size: 15px;
+}
+.summary-hindi{
+    border: 10px solid #a7d9fe;
+    background-color: #edf8fe;
+    border-radius: 10px;
+    padding: 30px 20px 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.summary-hindi h3{
+    color: #537ecd;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+.summary-hindi p{
+    font-size: 15px;
+}
+
+.procedure{
+    background-color: #1461af;
+    padding: 20px 0;
+    margin: 0 25px;
+}
+.procedure h3{
+    font-family: "Nunito", sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    text-align: center;
+    color: white;
+}
+
+
+
+  
+  

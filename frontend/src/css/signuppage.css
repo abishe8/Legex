@@ -1,0 +1,68 @@
+.signup-page{
+    padding-bottom: 30px;
+}
+.signup-page-wrapper{
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid #4a4949;
+    text-align: center;
+    padding: 20px;
+    padding-bottom: 30px;
+    border-radius: 7px;
+    margin: 0 auto;
+    margin-top: 40px;
+    position: relative;
+}
+.google-sign-in-divider{
+    position: absolute;
+    border-top: 1px solid #bcb9b9;
+    height: 10px;
+    width: 100%;
+    bottom: -9%;
+    left: 0;
+  }
+.signup-page-wrapper::before{
+    position: absolute;
+    content: "or";
+    color: #bcb9b9;
+    background-color: white;
+    width: 25px;
+    height: 25px;
+    font-size: 18px;
+    border-radius: 50%;
+    bottom: -9%;
+    left: 49%;
+    z-index: 100;
+}
+
+.signup-page-wrapper h2{
+    text-align: left;
+    color: #3d74d9;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 20px 0;
+    margin-top: 15px;
+}
+
+.signup-btn{
+    background-color: #3d74d9;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    padding: 10px 0;
+    width: 100%;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.signup-logo{
+    width: 150px;
+    margin: 0 auto;
+    padding: 15px 0;
+}
+
+.signup-page-wrapper p a:hover{
+    text-decoration: underline;
+}

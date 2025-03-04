@@ -1,0 +1,70 @@
+
+
+.agreement-form-wrapper{
+    padding: 20px 0;
+}
+.agreement-form-page .agreement-form-wrapper h2{
+    text-align: center;
+    font-weight: 400;
+    margin: 20px 0;
+}
+.form-inputs{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    border: 1px solid #bdbaba;
+    border-radius: 5px;
+    padding: 20px 10px;
+}
+
+.form-inputs div label{
+    display: block;
+    color: #5b5b5b;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.form-inputs div input{
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #bdbaba;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #5b5b5b;
+    outline-color: #5b5b5b;
+}
+.form-inputs div select{
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #bdbaba;
+    border-radius: 6px;
+    color: #5b5b5b;
+    outline-color: #5b5b5b;
+}  
+
+.submit-btn{
+    border: none;
+    cursor: pointer;
+    background-color: #3d74d9;
+    padding: 10px 40px;
+    border-radius: 7px;
+    font-weight: 500;
+    color: white;
+    display: block;
+    font-size: 18px;
+    margin: 10px auto;
+}
+
+
+@media (max-width: 990px){
+    .form-inputs{
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+@media (max-width: 600px){
+    .form-inputs{
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+}
