@@ -1,14 +1,68 @@
+import { useState } from "react";
+import axios from "axios";
+
 function ReleaseDeed() {
+    const [formData, setFormData] = useState({
+        "agreement-day": "",
+        "agreement-month": "",
+        "agreement-year": "",
+        "releaser-name": "",
+        "releasers-fathers-name": "",
+        "releasers-address": "",
+        "releasee-name": "",
+        "releasees-fathers-name": "",
+        "releasees-address": "",
+        "property-size": "",
+        "property-door-number": "",
+        "property-location": "",
+        "survey-number": "",
+        "taluk-name": "",
+        "district-name": "",
+        "document-number": "",
+        "registration-file-page-start": "",
+        "registration-file-page-end": "",
+        "sub-registrar-office-location": "",
+        "rights-granted": "",
+        "select-language": "English",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3000/api/documents/generate", {
+                documentType: "release", // Specify the document type
+                data: formData, // Send form data
+            });
+            console.log("Document generated:", response.data);
+            alert("Document generated successfully!");
+        } catch (error) {
+            console.error("Error generating document:", error);
+            alert("Failed to generate document.");
+        }
+    };
     return ( 
         <div className="agreement-form-page">
             <div className="container">
                 <div className="agreement-form-wrapper">
                     <h2>Enter The Details for Release Deed</h2>
-                    <form className="agreement-form">
+                    <form className="agreement-form" onSubmit={handleSubmit}>
                         <div className="form-inputs">
                             <div>
-                                <label htmlFor="agreement-date">Enter Agreement Date:</label>
-                                <input placeholder="eg. 25/02/2025" type="date" name="agreement-date"/>
+                                <label htmlFor="agreement-day">Enter Agreement Day:</label>
+                                <input placeholder="eg.25" type="date" name="agreement-day"/>
+                            </div>
+                            <div>
+                                <label htmlFor="agreement-month">Enter Agreement Month:</label>
+                                <input placeholder="eg.January " type="date" name="agreement-month"/>
+                            </div>
+                            <div>
+                                <label htmlFor="agreement-year">Enter Agreement Year:</label>
+                                <input placeholder="eg.2025" type="date" name="agreement-year"/>
                             </div>
                             <div>
                                 <label htmlFor="releaser-name ">Enter Releaser Name:</label>

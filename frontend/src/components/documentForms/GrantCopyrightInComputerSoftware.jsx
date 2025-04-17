@@ -1,10 +1,54 @@
+import { useState } from "react";
+import axios from "axios";
+
 function GrantCopyrightInComputerSoftware() {
+   const [formData, setFormData] = useState({
+      place: "",
+      "agreement-day": "",
+      "agreement-month": "",
+      "agreement-year": "",
+      "consultant-name": "",
+      "programmer-name": "",
+      "consultant-address": "",
+      "programmer-father": "",
+      "programmer-address": "",
+      "programmer-payment": "",
+      "delivery-year-month": "",
+      "delivery-day": "",
+      "delivery-month": "",
+      "delivery-year": "",
+      "first-advance-payment": "",
+      "remaining-payment": "",
+      "select-language": "English",
+  });
+
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          const response = await axios.post("http://localhost:3000/api/documents/generate", {
+              documentType: "grantcs", // Specify the document type
+              data: formData, // Send form data
+          });
+          console.log("Document generated:", response.data);
+          alert("Document generated successfully!");
+      } catch (error) {
+          console.error("Error generating document:", error);
+          alert("Failed to generate document.");
+      }
+  };
+
+
    return (
       <div className="agreement-form-page">
          <div className="container">
             <div className="agreement-form-wrapper">
                <h2>Enter The Details For Agreement to Grant Copyright in Computer Software</h2>
-               <form className="agreement-form">
+               <form className="agreement-form" onSubmit={handleSubmit}>
                   <div className="form-inputs">
                      <div>
                         <label htmlFor="place">Enter Place of Agreement:</label>

@@ -1,10 +1,73 @@
+import { useState } from "react";
+import axios from "axios";
+
 function LockoutAgreement() {
+    const [formData, setFormData] = useState({
+        "agreement-day": "",
+        "agreement-year": "",
+        "agreement-location": "",
+        "vendors-name": "",
+        "vendors-fathers-name": "",
+        "vendors-age": "",
+        "vendors-occupation": "",
+        "vendors-address": "",
+        "vendee-name": "",
+        "vendees-fathers-name": "",
+        "vendees-age": "",
+        "vendees-occupation": "",
+        "vendees-address": "",
+        "plot-number": "",
+        "plot-area-yards": "",
+        "plot-area-meters": "",
+        "survey-number-start": "",
+        "survey-number-end": "",
+        "plot-address": "",
+        "previous-owner-name": "",
+        "sale-deed-document-no": "",
+        "sale-deed-date": "",
+        "sale-amount": "",
+        "sale-amount-in-words": "",
+        "advance-amount-paid": "",
+        "advance-amount-paid-in-words": "",
+        "remaining-balance-amount": "",
+        "remaining-balance-amount-in-words": "",
+        "balance-payment-due-days": "",
+        "plot-mandal": "",
+        "plot-jurisdiction": "",
+        "north-boundary-details": "",
+        "south-boundary-details": "",
+        "East-boundary-details": "",
+        "west-boundary-details": "",
+        "select-language": "English",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3000/api/documents/generate", {
+                documentType: "lockout", // Specify the document type
+                data: formData, // Send form data
+            });
+            console.log("Document generated:", response.data);
+            alert("Document generated successfully!");
+        } catch (error) {
+            console.error("Error generating document:", error);
+            alert("Failed to generate document.");
+        }
+    };
+
+
     return ( 
         <div className="agreement-form-page">
             <div className="container">
                 <div className="agreement-form-wrapper">
                     <h2>Enter The Details For Lockout Agreement</h2>
-                    <form className="agreement-form">
+                    <form className="agreement-form" onSubmit={handleSubmit}>
                         <div className="form-inputs">
                             <div>
                                 <label htmlFor="agreement-day">Enter Agreement Day:</label>

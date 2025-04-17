@@ -1,10 +1,60 @@
+import { useState } from "react";
+import axios from "axios";
+
 function EmploymentAgreement() {
+    const [formData, setFormData] = useState({
+        "agreement-date": "",
+        "agreement-month": "",
+        "agreement-year": "",
+        "company-name": "",
+        "company-address": "",
+        "employee-name": "",
+        "dependant-name": "",
+        "employee-age": "",
+        "employee-address": "",
+        "job-position": "",
+        "initial-work-period": "",
+        "job-responsibilities": "",
+        "salary-amount": "",
+        "causal-leave-days": "",
+        "causal-leave-in-words": "",
+        "sick-leave-days": "",
+        "sick-leave-in-words": "",
+        "public-holidays-allowed": "",
+        "public-holidays-in-words": "",
+        "notice-period-duration": "",
+        "notice-period-in-words": "",
+        "employee-advance-payment": "",
+        "employee-advance-payment-words": "",
+        "select-language": "English",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3000/api/documents/generate", {
+                documentType: "employment", // Specify the document type
+                data: formData, // Send form data
+            });
+            console.log("Document generated:", response.data);
+            alert("Document generated successfully!");
+        } catch (error) {
+            console.error("Error generating document:", error);
+            alert("Failed to generate document.");
+        }
+    };
+
     return ( 
         <div className="agreement-form-page">
             <div className="container">
                 <div className="agreement-form-wrapper">
                     <h2>Enter The Details For Employment Agreement</h2>
-                    <form className="agreement-form">
+                    <form className="agreement-form" onSubmit={handleSubmit}>
                         <div className="form-inputs">
                             <div>
                                 <label htmlFor="agreement-date">Enter Agreement Date:</label>

@@ -1,11 +1,71 @@
+import { useState } from "react";
+import axios from "axios";
+
 function TrustDeed() {
+    const [formData, setFormData] = useState({
+        "place-of-agreement": "",        
+        "agreement-day": "",
+        "agreement-year": "",
+        "trustors-name": "",
+        "trustors-fathers-name": "",
+        "trustors-address": "",
+        "trust-fund-amount": "",
+        "trust-fund-amount-in-words": "",
+        "advance-payment-amount": "",
+        "trust-address": "",
+        "trust-authorities-names": "",
+        "trust-objectives": "",
+        "trust-functions": "",
+        "trust-occupations": "",
+        "conditions-of-trustee-removal": "",
+        "appointment-of-new-trustees": "",
+        "trust-administration-details": "",
+        "trust-meeting-schedule": "",
+        "trust-resolutions-decision-making": "",
+        "trust-legal-rights": "",
+        "trust-bank-account-details": "",
+        "trust-indemnity-conditions": "",
+        "trust-activities-operations": "",
+        "trust-dissolution-procedure": "",
+        "trust-fund distribution-proceedings": "",
+        "select-language": "English",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3000/api/documents/generate", {
+                documentType: "trust", // Specify the document type
+                data: formData, // Send form data
+            });
+            console.log("Document generated:", response.data);
+            alert("Document generated successfully!");
+        } catch (error) {
+            console.error("Error generating document:", error);
+            alert("Failed to generate document.");
+        }
+    };
+
     return ( 
         <div className="agreement-form-page">
             <div className="container">
                 <div className="agreement-form-wrapper">
                     <h2>Enter The Details for Trust Deed</h2>
-                    <form className="agreement-form">
+                    <form className="agreement-form" onSubmit={handleSubmit}>
                         <div className="form-inputs">
+                            <div>
+                                <label htmlFor="agreement-day">Enter Agreement Day:</label>
+                                <input placeholder="eg.25th May" type="date" name="agreement-day"/>
+                            </div>
+                            <div>
+                                <label htmlFor="agreement-year">Enter Agreement Year:</label>
+                                <input placeholder="eg.2025" type="date" name="agreement-year"/>
+                            </div>
                             <div>
                                 <label htmlFor="place-of-agreement">Enter Place Of Agreement:</label>
                                 <input placeholder="eg. Chennai, Tamil Nadu" type="text" name="place-of-agreement"/>

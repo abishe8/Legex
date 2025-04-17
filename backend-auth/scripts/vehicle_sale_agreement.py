@@ -1,0 +1,71 @@
+import docx
+import os
+import sys
+import json
+
+# Function to replace placeholders with data and apply formatting
+def replace_text_and_format(run, text, font_size=12, bold=False, italic=False):
+    run.text = text  # Replace the text
+    run.font.size = docx.shared.Pt(font_size)  # Set font size
+    run.bold = bold  # Set bold
+    run.italic = italic  # Set italic
+
+# Function to replace placeholders in a paragraph
+def replace_placeholders(paragraph, data):
+    for key, value_info in data.items():
+        if key in paragraph.text:
+            for run in paragraph.runs:
+                if key in run.text:
+                    replace_text_and_format(
+                        run,
+                        value_info['text'],
+                        font_size=value_info['font_size'],
+                        bold=value_info['bold'],
+                    )
+
+if __name__ == "__main__":
+    # Read JSON input from stdin
+    input_data = json.loads(sys.stdin.read())
+
+    # Map input data to the placeholders in the template
+    data = {
+        'DAY': {'text': input_data.get("agreement-date", ""), 'font_size': 12, 'bold': True},
+        'YEAR': {'text': input_data.get("agreement-year", ""), 'font_size': 12, 'bold': True},
+        'SELLERNAME': {'text': input_data.get("sellers-name", ""), 'font_size': 12, 'bold': True},
+        'SELLERFATHER': {'text': input_data.get("sellers-fathers-name", ""), 'font_size': 12, 'bold': True},
+        'SELLERADDRESS': {'text': input_data.get("sellers-address", ""), 'font_size': 12, 'bold': True},
+        'VEHICLENAME': {'text': input_data.get("vehicle-name-model", ""), 'font_size': 12, 'bold': True},
+        'BUYERNAME': {'text': input_data.get("buyer-name", ""), 'font_size': 12, 'bold': True},
+        'BUYERFATHER': {'text': input_data.get("buyers-fathers-name", ""), 'font_size': 12, 'bold': True},
+        'BUYERADDRESS': {'text': input_data.get("buyers-address", ""), 'font_size': 12, 'bold': True},
+        'VEHICLEREGISTERNO': {'text': input_data.get("vehicle-registration-number", ""), 'font_size': 12, 'bold': True},
+        'VEHICLECHASSISNO': {'text': input_data.get("vehicle-chassis-number", ""), 'font_size': 12, 'bold': True},
+        'VEHICLEENGINENO': {'text': input_data.get("vehicle-engine-number", ""), 'font_size': 12, 'bold': True},
+        'AMOUNT': {'text': input_data.get("sale-price", ""), 'font_size': 12, 'bold': True},
+        'MODEOFPAYMENT': {'text': input_data.get("payment-mode", ""), 'font_size': 12, 'bold': True},
+        'NOMINEEADDRESS': {'text': input_data.get("nominee-address", ""), 'font_size': 12, 'bold': True},
+        'BANKNAME': {'text': input_data.get("bank-name", ""), 'font_size': 12, 'bold': True},
+        'PLACE': {'text': input_data.get("place-of-agreement", ""), 'font_size': 12, 'bold': True},
+    }
+
+    # Specify the path to your template file
+    template_file_path = r"D:\Legex\Legex\backend-auth\templates\Vehicle-Sale-Agreement.docx"
+
+    # Check if the template file exists
+    if not os.path.exists(template_file_path):
+        print(json.dumps({"error": f"Template file '{template_file_path}' not found."}))
+        sys.exit(1)
+
+    # Load the Word document template
+    doc = docx.Document(template_file_path)
+
+    # Replace placeholders in the document
+    for paragraph in doc.paragraphs:
+        replace_placeholders(paragraph, data)
+
+    # Save the filled-in document
+    output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_vehicle_sale_agreement.docx"
+    doc.save(output_file_path)
+
+    # Return the output file path
+    print(json.dumps({"filePath": output_file_path}))

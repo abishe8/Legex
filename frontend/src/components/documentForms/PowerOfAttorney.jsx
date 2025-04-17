@@ -1,10 +1,48 @@
+import { useState } from "react";
+import axios from "axios";
+
 function PowerOfAttorney() {
+    const [formData, setFormData] = useState({
+        "principal-name": "",
+        "principal-age": "",
+        "principal-address": "",
+        "nominee-name": "",
+        "nominee-fathers-name": "",
+        "nominee-age": "",
+        "nominee-address": "",
+        "bank-name": "",
+        "day-of-agreement": "",
+        "year-of-agreement": "",
+        "place-of-agreement": "",
+        "select-language": "English",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3000/api/documents/generate", {
+                documentType: "powerofattorney", // Specify the document type
+                data: formData, // Send form data
+            });
+            console.log("Document generated:", response.data);
+            alert("Document generated successfully!");
+        } catch (error) {
+            console.error("Error generating document:", error);
+            alert("Failed to generate document.");
+        }
+    };
+
     return ( 
         <div className="agreement-form-page">
             <div className="container">
                 <div className="agreement-form-wrapper">
                     <h2>Enter The Details for Power of Attorney</h2>
-                    <form className="agreement-form">
+                    <form className="agreement-form" onSubmit={handleSubmit}>
                         <div className="form-inputs">
                             <div>
                                 <label htmlFor="principal-name">Enter Principal Name:</label>

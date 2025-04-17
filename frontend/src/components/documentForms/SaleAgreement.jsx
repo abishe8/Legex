@@ -1,11 +1,78 @@
+import { useState } from "react";
+import axios from "axios";
+
 function SaleAgreement() {
+    const [formData, setFormData] = useState({
+        "agreement-day": "",
+        "agreement-month": "",
+        "agreement-year": "",
+        "place-of-agreement": "",
+        "sellers-name": "",
+        "sellers-fathers-name": "",
+        "sellers-address": "",
+        "purchasers-name": "",
+        "purchasers-fathers-name": "",
+        "purchasers-address": "",
+        "total-sale-price": "",
+        "total-sale-price-in-words": "",
+        "property-area": "",
+        "advance-payment-amount": "",
+        "advance-payment-amount-in-words": "",
+        "cheque-number": "",
+        "cheque-issuance-date": "",
+        "cheque-drawn-date": "",
+        "remaining-balance-amount": "",
+        "remaining-balance-amount-in-words": "",
+        "compensation-amount-for-breach": "",
+        "day-of-agreement-execution": "",
+        "property-address": "",
+        "north-boundary-details": "",
+        "south-boundary-details": "",
+        "west-boundary-details": "",
+        "east-boundary-details": "",
+        "shop-flat-plot-number": "",
+        "select-language": "English",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3000/api/documents/generate", {
+                documentType: "sale-agreement", // Specify the document type
+                data: formData, // Send form data
+            });
+            console.log("Document generated:", response.data);
+            alert("Document generated successfully!");
+        } catch (error) {
+            console.error("Error generating document:", error);
+            alert("Failed to generate document.");
+        }
+    };
+
     return ( 
         <div className="agreement-form-page">
             <div className="container">
                 <div className="agreement-form-wrapper">
                     <h2>Enter The Details for Sale Agreement</h2>
-                    <form className="agreement-form">
+                    <form className="agreement-form" onSubmit={handleSubmit}>
                         <div className="form-inputs">
+                            <div>
+                                <label htmlFor="agreement-day">Enter Agreement Day:</label>
+                                <input placeholder="eg.25" type="date" name="agreement-day"/>
+                            </div>
+                            <div>
+                                <label htmlFor="agreement-month">Enter Agreement Month:</label>
+                                <input placeholder="eg.January " type="date" name="agreement-month"/>
+                            </div>
+                            <div>
+                                <label htmlFor="agreement-year">Enter Agreement Year:</label>
+                                <input placeholder="eg.2025" type="date" name="agreement-year"/>
+                            </div>
                             <div>
                                 <label htmlFor="place-of-agreement">Enter Place Of Agreement:</label>
                                 <input placeholder="eg. Chennai, Tamil Nadu" type="text" name="place-of-agreement"/>
