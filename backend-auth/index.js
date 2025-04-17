@@ -5,7 +5,7 @@ import cors from "cors"
 
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.route.js"
-
+import documentRoutes from "./routes/document.route.js";
 
 dotenv.config()
 
@@ -18,7 +18,7 @@ app.use(cookieParser())
 
 
 app.use("/api/auth", authRoutes)
-
+app.use("/api/documents", documentRoutes);
 
 
 app.listen(3000, () => {
