@@ -44,7 +44,10 @@ export const generateDocument = async (req, res) => {
             const output = JSON.parse(stdout);
             res.status(200).json({
                 message: "Document generated successfully",
-                filePath: output.filePath,
+                wordFilePath: output.filePath,
+                summaryFilePath: output.summaryFilePath,
+                pdfFilePath: output.pdfFilePath || null, // Optional if PDF is generated
+                roadmapFolderPath: output.roadmapFolderPath,
             });
         });
     } catch (error) {
@@ -52,3 +55,31 @@ export const generateDocument = async (req, res) => {
         res.status(500).json({ error: "Failed to generate document" });
     }
 };
+
+// export const getDocx = (req, res) => {
+//     const docxPath = path.resolve("filled_documents", "Filled_document_agreement_copyright.docx");
+//     if (!fs.existsSync(docxPath)) {
+//         return res.status(404).json({ error: "Word document not found" });
+//     }
+//     res.sendFile(docxPath);
+// };
+
+// // Serve the generated PDF document
+// export const getPdf = (req, res) => {
+//     const pdfPath = path.resolve("filled_documents", "Filled_document_agreement_copyright.pdf");
+//     if (!fs.existsSync(pdfPath)) {
+//         return res.status(404).json({ error: "PDF document not found" });
+//     }
+//     res.sendFile(pdfPath);
+// };
+
+// // Serve the generated summary
+// export const getSummary = (req, res) => {
+//     const summaryPath = path.resolve("filled_summary", "Filled_document_agreement_copyright.txt");
+//     if (!fs.existsSync(summaryPath)) {
+//         return res.status(404).json({ error: "Summary not found" });
+//     }
+//     const summaryContent = fs.readFileSync(summaryPath, "utf-8");
+//     res.json({ summary: summaryContent });
+// };
+

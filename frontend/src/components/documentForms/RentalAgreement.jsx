@@ -1,7 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
+import { useLocation,useNavigate } from "react-router-dom";
 
 function RentalAgreement() {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Retrieve pre-filled form data from location.state
+    const preFilledData = location.state?.formData;
+
     const [formData, setFormData] = useState({
         "owner-name": "",
         "owners-father": "",
@@ -18,6 +25,13 @@ function RentalAgreement() {
         "select-language": "English",
     });
 
+    // Populate form data with pre-filled values if they exist
+    useEffect(() => {
+            if (preFilledData) {
+                setFormData(preFilledData);
+            }
+        }, [preFilledData]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -32,6 +46,16 @@ function RentalAgreement() {
             });
             console.log("Document generated:", response.data);
             alert("Document generated successfully!");
+            navigate("/display-summary", {
+                state: {
+                    wordFilePath: response.data.wordFilePath,
+                    summaryFilePath: response.data.summaryFilePath,
+                    pdfFilePath: response.data.pdfFilePath,
+                    roadmapFolderPath: response.data.roadmapFolderPath,
+                    formData, // Pass the updated form data back to the summary page
+                    documentType: "rental", // Pass the document type
+                },
+            });
         } catch (error) {
             console.error("Error generating document:", error);
             alert("Failed to generate document.");

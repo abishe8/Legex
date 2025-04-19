@@ -2,6 +2,7 @@ import docx
 import os
 import sys
 import json
+from docx2pdf import convert
 
 # Function to replace placeholders with data and apply formatting
 def replace_text_and_format(run, text, font_size=12, bold=False, italic=False):
@@ -22,6 +23,14 @@ def replace_placeholders(paragraph, data):
                         font_size=value_info['font_size'],
                         bold=value_info['bold'],
                     )
+def replace_placeholders_in_text(text, data):
+    for key, value_info in data.items():
+        text = text.replace(key, value_info['text'])  # Replace the placeholder with its value
+    return text
+
+# Function to convert Word document to PDF
+def convert_to_pdf(word_file_path, pdf_file_path):
+    convert(word_file_path, pdf_file_path)
 
 if __name__ == "__main__":
     # Read JSON input from stdin
@@ -46,7 +55,7 @@ if __name__ == "__main__":
 
     # Specify the path to your template file
     template_file_path = r"D:\Legex\Legex\backend-auth\templates\Deed of Simple Mortgage.docx"
-
+    summary_template_file_path = r"D:\Legex\Legex\backend-auth\summary\Deed of Simple Mortgage.txt"
     # Check if the template file exists
     if not os.path.exists(template_file_path):
         print(json.dumps({"error": f"Template file '{template_file_path}' not found."}))
@@ -63,5 +72,26 @@ if __name__ == "__main__":
     output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_deed_of_simple_mortgage.docx"
     doc.save(output_file_path)
 
+    #check if the summary template file exists
+    if not os.path.exists(summary_template_file_path):
+        print(json.dumps({"error": f"Summary template file '{summary_template_file_path}' not found."}))
+        sys.exit(1)
+
+    summary = open(summary_template_file_path, 'r').read()
+    filled_summary = replace_placeholders_in_text(summary, data)
+
+    # Save the summary to a text file
+    summary_output_file_path = r"D:\Legex\Legex\backend-auth\filled_summary\Filled_deed_of_simple_mortgage_summary.txt"
+    with open(summary_output_file_path, 'w') as summary_file:
+        summary_file.write(filled_summary)
+    
+    #Convert the Word document to PDF
+    pdf_output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_deed_of_simple_mortgage.pdf"
+    convert_to_pdf(output_file_path, pdf_output_file_path)
+    
     # Return the output file path
-    print(json.dumps({"filePath": output_file_path}))
+    print(json.dumps({
+            "wordFilePath": output_file_path,
+            "summaryFilePath": summary_output_file_path,
+            "pdfFilePath":pdf_output_file_path
+        }))
