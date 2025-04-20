@@ -104,6 +104,17 @@
 .summary-hindi p{
     font-size: 15px;
 }
+.language-selector {
+    margin-top: 20px;
+    margin-bottom: 10px;
+ }
+ 
+ .summary-translated {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+ }
+ 
 
 .procedure{
     /* background-color: #1461af; */

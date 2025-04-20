@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
     # Specify the path to your template file
     template_file_path = r"D:\Legex-Integration\Legex\backend-auth\templates\Deed of Simple Mortgage.docx"
-    summary_template_file_path = r"D:\Legex-Integration\Legex\backend-auth\summary\Deed of Simple Mortgage.txt"
+    summary_template_file_path = r"D:\Legex-Integration\Legex\backend-auth\summary\deed_of_simple_mortgage.txt"
     # Check if the template file exists
     if not os.path.exists(template_file_path):
         print(json.dumps({"error": f"Template file '{template_file_path}' not found."}))
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     convert_to_pdf(output_file_path, pdf_output_file_path)
     
     #Roadmap Path 
-    roadmap_folder_path = r"D:\Legex-Integration\Legex\backend-auth\Roadmap\Deed on Simple Mortage"
+    roadmap_folder_path = r"D:\Legex-Integration\Legex\backend-auth\Roadmap\Deed on Simple Mortgage"
     # Return the output file path
     print(json.dumps({
             "wordFilePath": output_file_path,

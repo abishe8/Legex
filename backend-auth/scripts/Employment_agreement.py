@@ -89,7 +89,7 @@ if __name__ == "__main__":
     doc.save(output_file_path)
 
     # Load the summary template file
-    summary = open(summary_template_file_path, 'r').read()
+    summary = open(summary_template_file_path, 'r', encoding='utf-8').read()
     filled_summary = replace_placeholders_in_text(summary, data)
 
     # Save the summary to a text file

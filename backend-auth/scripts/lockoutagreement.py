@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     # Replace placeholders in the document
     for paragraph in doc.paragraphs:
-        replace_placeholders(paragraph)
+        replace_placeholders(paragraph, data)
 
     # Save the filled-in document
     output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_Lockout_Agreement.docx"

@@ -15,7 +15,7 @@ function DisplaySummaryPage() {
 };
    const [summary, setSummary] = useState("");
    const [roadmapHtml, setRoadmapHtml] = useState("");
-
+   
    // Generate URLs
    let pdfUrl = "";
    if (pdfFilePath?.includes("filled_documents")) {
@@ -92,7 +92,7 @@ function DisplaySummaryPage() {
                 </button>
                <div className="button-group">
                 <button className="download-btn">
-                    <a href={wordUrl} download="GeneratedDocument.docx">Download Word Document</a>
+                    <a href={wordUrl} download="GeneratedDocument.docx">Download Word File</a>
                 </button>
 
                 <button className="download-btn">
