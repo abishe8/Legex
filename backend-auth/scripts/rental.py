@@ -39,6 +39,9 @@ if __name__ == "__main__":
     input_data = json.loads(sys.stdin.read())
     # Map input data to the placeholders in the template
     data = {
+        'FIX':{'text': input_data.get("agreement-day", ""), 'font_size': 12, 'bold': True},
+        'MONTH':{'text': input_data.get("agreement-month", ""), 'font_size': 12, 'bold': True},
+        'YEAR':{'text': input_data.get("agreement-year", ""), 'font_size': 12, 'bold': True},
         'OWNERNAME': {'text': input_data.get("owner-name", ""), 'font_size': 12, 'bold': True},
         'FATHEROWNER': {'text': input_data.get("owners-father", ""), 'font_size': 12, 'bold': True},
         'OWNERAGE': {'text': input_data.get("owner-age", ""), 'font_size': 12, 'bold': True},

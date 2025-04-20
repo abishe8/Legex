@@ -74,6 +74,36 @@ function RentalAgreement() {
                     <h2>Enter The Details For Rental Agreement</h2>
                     <form className="agreement-form" onSubmit={handleSubmit}>
                         <div className="form-inputs">
+                        <div>
+                                <label htmlFor="agreement-day">Enter Agreement Day:</label>
+                                <input
+                                    placeholder="eg. 30"
+                                    type="text"
+                                    name="agreement-day"
+                                    value={formData["agreement-day"]}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="agreement-month">Enter Agreement Month:</label>
+                                <input
+                                    placeholder="eg. 11"
+                                    type="text"
+                                    name="agreement-month"
+                                    value={formData["agreement-month"]}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="agreement-year">Enter Agreement Year:</label>
+                                <input
+                                    placeholder="eg. 2025"
+                                    type="text"
+                                    name="agreement-year"
+                                    value={formData["agreement-year"]}
+                                    onChange={handleChange}
+                                />
+                            </div>
                             <div>
                                 <label htmlFor="owner-name">Enter Owner Name:</label>
                                 <input

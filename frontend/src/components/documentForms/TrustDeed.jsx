@@ -54,7 +54,7 @@ function TrustDeed() {
         try {
             console.log("entered submit function");
             const response = await axios.post("http://localhost:3000/api/documents/generate", {
-                documentType: "rental",
+                documentType: "trust",
                 data: formData,
             });
     
@@ -68,7 +68,7 @@ function TrustDeed() {
                     pdfFilePath: response.data.pdfFilePath,
                     roadmapFolderPath: response.data.roadmapFolderPath,
                     formData,
-                    documentType: "rental-agreement",
+                    documentType: "trust-deed",
                 },
             });
         } catch (error) {

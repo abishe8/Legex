@@ -47,7 +47,7 @@ function VehicleSaleAgreement() {
         try {
             console.log("entered submit function");
             const response = await axios.post("http://localhost:3000/api/documents/generate", {
-                documentType: "rental",
+                documentType: "vehicle",
                 data: formData,
             });
     
@@ -61,7 +61,7 @@ function VehicleSaleAgreement() {
                     pdfFilePath: response.data.pdfFilePath,
                     roadmapFolderPath: response.data.roadmapFolderPath,
                     formData,
-                    documentType: "rental-agreement",
+                    documentType: "motor-vehicle-sale-agreement",
                 },
             });
         } catch (error) {

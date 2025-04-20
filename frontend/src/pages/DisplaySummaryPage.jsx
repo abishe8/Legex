@@ -104,10 +104,10 @@ function DisplaySummaryPage() {
                   <h3>Summary in English</h3>
                   <p>{summary || "Loading summary..."}</p>
                </div>
-               <div className="summary-hindi">
+               {/* <div className="summary-hindi">
                   <h3>Summary in Hindi</h3>
                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni magnam natus in expedita quis quaerat illo tenetur porro vero id! Veritatis doloremque nostrum tempora qui. Id quidem praesentium eum, vero dolore voluptatem omnis dolor reiciendis minima quas inventore doloribus temporibus, odit mollitia optio, tenetur alias nobis culpa veritatis. Facilis porro doloribus modi iste odit ipsa recusandae nam mollitia eligendi inventore.</p>
-               </div>
+               </div> */}
 
                <div className="procedure">
                   <iframe
