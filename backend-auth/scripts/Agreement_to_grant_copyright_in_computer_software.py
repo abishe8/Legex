@@ -56,8 +56,8 @@ if __name__ == "__main__":
     }
 
     # Specify the path to your template file
-    template_file_path = r"D:\Legex\Legex\backend-auth\templates\copyright in computer software.docx"
-    summary_template_file_path = r"D:\Legex\Legex\backend-auth\summary\copyright in computer software.txt"
+    template_file_path = r"D:\Legex-Integration\Legex\backend-auth\templates\copyright in computer software.docx"
+    summary_template_file_path = r"D:\Legex-Integration\Legex\backend-auth\summary\copyright in computer software.txt"
    
     # Check if the template file exists
     if not os.path.exists(template_file_path):
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         replace_placeholders(paragraph, data)
 
     # Save the filled-in document
-    output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_agreement_copyright.docx"
+    output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_agreement_copyright.docx"
     doc.save(output_file_path)
     
     #Load the summary template file
@@ -84,15 +84,15 @@ if __name__ == "__main__":
     filled_summary = replace_placeholders_in_text(summary, data)
 
     #Save the summary to a text file
-    summary_output_file_path = r"D:\Legex\Legex\backend-auth\filled_summary\Filled_document_agreement_copyright.txt"
+    summary_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_summary\Filled_document_agreement_copyright.txt"
     with open(summary_output_file_path, 'w') as summary_file:
         summary_file.write(filled_summary)
 
-    pdf_output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_agreement_copyright.pdf"
+    pdf_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_agreement_copyright.pdf"
     convert(output_file_path, pdf_output_file_path)
 
     #Roadmap folder path
-    roadmap_folder_path = r"D:\Legex\Legex\backend-auth\Roadmap\Agreement to grant copyrights to computers"
+    roadmap_folder_path = r"D:\Legex-Integration\Legex\backend-auth\Roadmap\Agreement to grant copyrights to computers"
     print(json.dumps({
             "wordFilePath": output_file_path,
             "summaryFilePath": summary_output_file_path,

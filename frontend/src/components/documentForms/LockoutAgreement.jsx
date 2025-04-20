@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import { useLocation,useNavigate } from "react-router-dom";
 
 function LockoutAgreement() {
     const navigate = useNavigate();
-    
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const location = useLocation();
 
     // Retrieve pre-filled form data from location.state
@@ -64,26 +64,32 @@ function LockoutAgreement() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
         try {
+            console.log("entered submit function");
             const response = await axios.post("http://localhost:3000/api/documents/generate", {
-                documentType: "lockout", // Specify the document type
-                data: formData, // Send form data
+                documentType: "rental",
+                data: formData,
             });
+    
             console.log("Document generated:", response.data);
             alert("Document generated successfully!");
+    
             navigate("/display-summary", {
                 state: {
                     wordFilePath: response.data.wordFilePath,
                     summaryFilePath: response.data.summaryFilePath,
                     pdfFilePath: response.data.pdfFilePath,
                     roadmapFolderPath: response.data.roadmapFolderPath,
-                    formData: formData, // Pass the form data to the summary page
-                    documentType: "lockout", // Pass the document type to the summary page
+                    formData,
+                    documentType: "rental-agreement",
                 },
             });
         } catch (error) {
             console.error("Error generating document:", error);
             alert("Failed to generate document.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -243,7 +249,9 @@ function LockoutAgreement() {
                         </select>
                     </div>
                 </div>
-                <button className="submit-btn">Submit</button>
+                <button className="submit-btn" type="submit" disabled={isSubmitting}>
+    {isSubmitting ? "Submitting..." : "Submit"}
+</button>
             </form>
         </div>
     </div>

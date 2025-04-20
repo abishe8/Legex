@@ -53,6 +53,10 @@
     font-size: 18px;
     margin: 10px auto;
 }
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 
 
 @media (max-width: 990px){

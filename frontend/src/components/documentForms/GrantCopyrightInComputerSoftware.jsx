@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import { useLocation,useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ function GrantCopyrightInComputerSoftware() {
 
   // Retrieve pre-filled form data from location.state
   const preFilledData = location.state?.formData;
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     place: "",
     "agreement-day": "",
@@ -43,32 +43,34 @@ function GrantCopyrightInComputerSoftware() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/documents/generate",
-        {
-          documentType: "grantcs", // Specify the document type
-          data: formData, // Send form data
-        }
-      );
-      console.log("Document generated:", response.data);
-      alert("Document generated successfully!");
-      navigate("/display-summary", {
-        state: {
-          wordFilePath: response.data.wordFilePath,
-          summaryFilePath: response.data.summaryFilePath,
-          pdfFilePath: response.data.pdfFilePath,
-          roadmapFolderPath: response.data.roadmapFolderPath,
-          formData: formData, // Pass the form data to the summary page
-          documentType: "grantcs", // Pass the document type to the summary page
+        console.log("entered submit function");
+        const response = await axios.post("http://localhost:3000/api/documents/generate", {
+            documentType: "rental",
+            data: formData,
+        });
 
-        },
-      });
+        console.log("Document generated:", response.data);
+        alert("Document generated successfully!");
+
+        navigate("/display-summary", {
+            state: {
+                wordFilePath: response.data.wordFilePath,
+                summaryFilePath: response.data.summaryFilePath,
+                pdfFilePath: response.data.pdfFilePath,
+                roadmapFolderPath: response.data.roadmapFolderPath,
+                formData,
+                documentType: "rental-agreement",
+            },
+        });
     } catch (error) {
-      console.error("Error generating document:", error);
-      alert("Failed to generate document.");
+        console.error("Error generating document:", error);
+        alert("Failed to generate document.");
+    } finally {
+        setIsSubmitting(false);
     }
-  };
+};
 
   return (
   <div className="agreement-form-page">
@@ -225,7 +227,9 @@ function GrantCopyrightInComputerSoftware() {
                        </select>
                    </div>
                </div>
-               <button className="submit-btn">Submit</button>
+               <button className="submit-btn" type="submit" disabled={isSubmitting}>
+    {isSubmitting ? "Submitting..." : "Submit"}
+</button>
            </form>
        </div>
    </div>

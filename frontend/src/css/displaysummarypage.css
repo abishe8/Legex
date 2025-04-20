@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+.display-document {
+    height: 600px; /* or any fixed height you want */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
 .display-summary-page{
     padding: 40px 0;
 }
@@ -30,6 +38,36 @@
     font-weight: 600;
     cursor: pointer;
     margin: 10px 0 20px;
+    text-decoration: none;
+}
+.download-btn a,
+.edit-btn a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.edit-btn{
+    background-color: #4077db;
+    color: white;
+    padding: 10px 0;
+    width: 100%;
+    max-width: 250px;
+    border: none;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 0 20px;
+}
+.button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px; /* Adjust spacing as needed */
+    margin-bottom: 20px;
+    margin-left: 30%;
 }
 
 .summary-english{
@@ -68,7 +106,7 @@
 }
 
 .procedure{
-    background-color: #1461af;
+    /* background-color: #1461af; */
     padding: 20px 0;
     margin: 0 25px;
 }

@@ -69,8 +69,8 @@ if __name__ == "__main__":
         }
 
     # Specify the path to your template file
-    template_file_path = r"D:\Legex\Legex\backend-auth\templates\sale agreement.docx"
-    summary_template_file_path = r"D:\Legex\Legex\backend-auth\summary\sale agreement.txt"
+    template_file_path = r"D:\Legex-Integration\Legex\backend-auth\templates\sale agreement.docx"
+    summary_template_file_path = r"D:\Legex-Integration\Legex\backend-auth\summary\sale agreement.txt"
 
     # Check if the summary template file exists 
     if not os.path.exists(summary_template_file_path):
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         replace_placeholders(paragraph, data)
 
     # Save the filled-in document
-    output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_sale_agreement.docx"
+    output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_sale_agreement.docx"
     doc.save(output_file_path)
 
     # Load the summary template file
@@ -98,16 +98,16 @@ if __name__ == "__main__":
     filled_summary = replace_placeholders_in_text(summary, data)
 
     # Save the summary to a text file
-    summary_output_file_path = r"D:\Legex\Legex\backend-auth\filled_summary\Filled_document_sale_agreement.txt"
+    summary_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_summary\Filled_document_sale_agreement.txt"
     with open(summary_output_file_path, 'w') as summary_file:
         summary_file.write(filled_summary)
     
     # Convert the Word document to PDF
-    pdf_output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_sale_agreement.pdf"
+    pdf_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_sale_agreement.pdf"
     convert_to_pdf(output_file_path, pdf_output_file_path)
     
     #roadmap folder path
-    roadmap_folder_path = r"D:\Legex\Legex\backend-auth\Roadmap\Sale Agreement"
+    roadmap_folder_path = r"D:\Legex-Integration\Legex\backend-auth\Roadmap\Sale Agreement"
 
     # Return the output file path
     print(json.dumps({

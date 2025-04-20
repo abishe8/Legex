@@ -37,7 +37,6 @@ def convert_to_pdf(word_file_path, pdf_file_path):
 if __name__ == "__main__":
     # Read JSON input from stdin
     input_data = json.loads(sys.stdin.read())
-
     # Map input data to the placeholders in the template
     data = {
         'OWNERNAME': {'text': input_data.get("owner-name", ""), 'font_size': 12, 'bold': True},
@@ -55,8 +54,8 @@ if __name__ == "__main__":
     }
 
     # Specify the path to your template file
-    template_file_path = r"D:\Legex\Legex\backend-auth\templates\Rental.docx"
-    summary_template_file_path = r"D:\Legex\Legex\backend-auth\summary\Rental.txt"
+    template_file_path = r"D:\Legex-Integration\Legex\backend-auth\templates\Rental.docx"
+    summary_template_file_path = r"D:\Legex-Integration\Legex\backend-auth\summary\Rental.txt"
 
     # Check if the summary template file exists
     if not os.path.exists(summary_template_file_path):
@@ -76,7 +75,7 @@ if __name__ == "__main__":
         replace_placeholders(paragraph, data)
 
     # Save the filled-in document
-    output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_rental.docx"
+    output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_rental.docx"
     doc.save(output_file_path)
 
     # Load the summary template file
@@ -84,21 +83,21 @@ if __name__ == "__main__":
     filled_summary = replace_placeholders_in_text(summary, data)
 
     # Save the summary to a text file
-    summary_output_file_path = r"D:\Legex\Legex\backend-auth\filled_summary\Filled_rental_summary.txt"
+    summary_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_summary\Filled_rental_summary.txt"
     with open(summary_output_file_path, 'w') as summary_file:
         summary_file.write(filled_summary)
     
     #Convert the Word document to PDF
-    pdf_output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_rental.pdf"
+    pdf_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_rental.pdf"
     convert_to_pdf(output_file_path, pdf_output_file_path)
     
     #Roadmap folder path
-    roadmap_folder_path = r"D:\Legex\Legex\backend-auth\Roadmap\rental Documentation"
+    roadmap_folder_path = r"D:\Legex-Integration\Legex\backend-auth\Roadmap\Rental Documentation"
     # Return the output file path
     print(json.dumps({
             "wordFilePath": output_file_path,
             "summaryFilePath": summary_output_file_path,
             "pdfFilePath":pdf_output_file_path,
             "roadmapFolderPath": roadmap_folder_path
-        }))
+        }), flush=True)
     

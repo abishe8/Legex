@@ -1,4 +1,5 @@
-import { exec } from "child_process";
+// import { exec } from "child_process";
+import { spawn } from "child_process";
 import path from "path";
 
 export const generateDocument = async (req, res) => {
@@ -30,56 +31,55 @@ export const generateDocument = async (req, res) => {
 
         // Execute the Python script and pass the form data as JSON
         const command = `python "${scriptPath}" '${JSON.stringify(data)}'`;
-        exec(command, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error executing script: ${error.message}`);
-                return res.status(500).json({ error: "Failed to generate document" });
-            }
-            if (stderr) {
-                console.error(`Script error: ${stderr}`);
-                return res.status(500).json({ error: "Error in document generation script" });
-            }
 
-            // Parse the output from the Python script
-            const output = JSON.parse(stdout);
-            res.status(200).json({
-                message: "Document generated successfully",
-                wordFilePath: output.filePath,
-                summaryFilePath: output.summaryFilePath,
-                pdfFilePath: output.pdfFilePath || null, // Optional if PDF is generated
-                roadmapFolderPath: output.roadmapFolderPath,
-            });
+        const python = spawn("python", [scriptPath]);
+
+        let output = "";
+        let errorOutput = "";
+
+        // Collect stdout
+        python.stdout.on("data", (dataChunk) => {
+            output += dataChunk.toString();
+            console.log("Python stdout:", dataChunk.toString());  
         });
+
+        // Collect stderr
+        python.stderr.on("data", (dataChunk) => {
+            errorOutput += dataChunk.toString();
+            console.error("Python stderr:", dataChunk.toString());  
+        });
+
+// Handle process exit
+python.on("close", (code) => {
+    // if (code !== 0) {
+    //     console.log("erorrrrrrrrr");
+    //     console.log(code);
+    //     console.error(`Python script error: ${errorOutput}`);
+    //     return res.status(500).json({ error: "Error in document generation script" });
+    // }
+
+    try {
+        const result = JSON.parse(output);
+        console.log("result:",result);
+        res.status(200).json({
+            message: "Document generated successfully",
+            wordFilePath: result.wordFilePath,
+            summaryFilePath: result.summaryFilePath,
+            pdfFilePath: result.pdfFilePath || null,
+            roadmapFolderPath: result.roadmapFolderPath,
+        });
+    } catch (err) {
+        console.error("Failed to parse JSON:", err);
+        res.status(500).json({ error: "Invalid response from Python script" });
+    }
+});
+
+// Send data via stdin
+python.stdin.write(JSON.stringify(data));
+python.stdin.end();
+
     } catch (error) {
         console.error("Error generating document:", error);
         res.status(500).json({ error: "Failed to generate document" });
     }
 };
-
-// export const getDocx = (req, res) => {
-//     const docxPath = path.resolve("filled_documents", "Filled_document_agreement_copyright.docx");
-//     if (!fs.existsSync(docxPath)) {
-//         return res.status(404).json({ error: "Word document not found" });
-//     }
-//     res.sendFile(docxPath);
-// };
-
-// // Serve the generated PDF document
-// export const getPdf = (req, res) => {
-//     const pdfPath = path.resolve("filled_documents", "Filled_document_agreement_copyright.pdf");
-//     if (!fs.existsSync(pdfPath)) {
-//         return res.status(404).json({ error: "PDF document not found" });
-//     }
-//     res.sendFile(pdfPath);
-// };
-
-// // Serve the generated summary
-// export const getSummary = (req, res) => {
-//     const summaryPath = path.resolve("filled_summary", "Filled_document_agreement_copyright.txt");
-//     if (!fs.existsSync(summaryPath)) {
-//         return res.status(404).json({ error: "Summary not found" });
-//     }
-//     const summaryContent = fs.readFileSync(summaryPath, "utf-8");
-//     res.json({ summary: summaryContent });
-// };
-

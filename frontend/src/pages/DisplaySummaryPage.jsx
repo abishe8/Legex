@@ -4,10 +4,11 @@ import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; 
 
 function DisplaySummaryPage() {
    const location = useLocation();
-   const { wordFilePath, summaryFilePath, pdfFilePath,roadmapFolderPath } = location.state || {};
+   const { wordFilePath, summaryFilePath, pdfFilePath,roadmapFolderPath,formData,documentType} = location.state || {};
    const navigate = useNavigate();
    const handleEdit = () => {
     navigate(`/${documentType}`, { state: { formData } }); // Navigate back to the form page with formData
@@ -15,37 +16,62 @@ function DisplaySummaryPage() {
    const [summary, setSummary] = useState("");
    const [roadmapHtml, setRoadmapHtml] = useState("");
 
+   // Generate URLs
+   let pdfUrl = "";
+   if (pdfFilePath?.includes("filled_documents")) {
+      const relativePath = pdfFilePath.split("filled_documents")[1].replace(/\\/g, "/");
+      pdfUrl = `http://localhost:3000/filled_documents${relativePath}`;
+   }
+
+   let wordUrl = "";
+   if (wordFilePath?.includes("filled_documents")) {
+      const wordRelativePath = wordFilePath.split("filled_documents")[1].replace(/\\/g, "/");
+      wordUrl = `http://localhost:3000/filled_documents${wordRelativePath}`;
+   }
+
+   let summaryUrl = "";
+   if (summaryFilePath?.includes("filled_summary")) {
+      const summaryRelativePath = summaryFilePath.split("filled_summary")[1].replace(/\\/g, "/");
+      summaryUrl = `http://localhost:3000/filled_summary${summaryRelativePath}`;
+   }
+
+   let roadmapUrl = "";
+   if (roadmapFolderPath?.includes("Roadmap")) {
+      const roadmapRelativePath = roadmapFolderPath.split("Roadmap")[1].replace(/\\/g, "/");
+      roadmapUrl = `http://localhost:3000/Roadmap${roadmapRelativePath}/rd.html`;
+   }
+   // Fetch summary content
    useEffect(() => {
-      // Fetch the summary content
       const fetchSummary = async () => {
-          try {
-              const response = await axios.get(summaryFilePath);
-              setSummary(response.data);
-          } catch (error) {
-              console.error("Error fetching summary:", error);
-          }
+         try {
+            console.log("Fetching summary from:", summaryUrl);
+            const response = await axios.get(summaryUrl);
+            setSummary(response.data);
+         } catch (error) {
+            console.error("Error fetching summary:", error);
+         }
       };
 
-      if (summaryFilePath) {
-          fetchSummary();
+      if (summaryUrl) {
+         fetchSummary();
       }
-  }, [summaryFilePath]);
+   }, [summaryUrl]);
 
-  useEffect(() => {
-   // Fetch the roadmap HTML
-   const fetchRoadmap = async () => {
-       try {
-           const response = await axios.get(`${roadmapFolderPath}/rd.html`);
-           setRoadmapHtml(response.data); // Set the HTML content
-       } catch (error) {
-           console.error("Error fetching roadmap:", error);
-       }
-   };
+   // Fetch roadmap HTML
+   useEffect(() => {
+      const fetchRoadmap = async () => {
+         try {
+            const response = await axios.get(roadmapUrl);
+            setRoadmapHtml(response.data); // Set the HTML content
+         } catch (error) {
+            console.error("Error fetching roadmap:", error);
+         }
+      };
 
-   if (roadmapFolderPath) {
-       fetchRoadmap();
-   }
-}, [roadmapFolderPath]);
+      if (roadmapUrl) {
+         fetchRoadmap();
+      }
+   }, [roadmapUrl]);
 
    return (
       <div className="display-summary-page">
@@ -54,26 +80,26 @@ function DisplaySummaryPage() {
                <h2>Generated Document</h2>
                <div className="display-document">
                {pdfFilePath ? (
-                            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.15.349/build/pdf.worker.min.js">
-                                <Viewer fileUrl={pdfFilePath} />
+                            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+                                <Viewer fileUrl={pdfUrl} />
                             </Worker>
                         ) : (
                             <p>PDF preview not available</p>
                         )}
                </div>
-               <button className="download-btn">
-                        <a href={wordFilePath} download="GeneratedDocument.docx">
-                            Download Word Document
-                        </a>
-               </button>
-               <button className="download-btn">
-                        <a href={pdfFilePath} download="GeneratedDocument.pdf">
-                          Download PDF
-                        </a>
-               </button>
                <button className="edit-btn" onClick={handleEdit}>
-                        Edit
-                    </button>
+                    Edit
+                </button>
+               <div className="button-group">
+                <button className="download-btn">
+                    <a href={wordUrl} download="GeneratedDocument.docx">Download Word Document</a>
+                </button>
+
+                <button className="download-btn">
+                    <a href={pdfUrl} download target="_blank" rel="noopener noreferrer">Download PDF</a>
+                </button>
+
+                </div>
                <div className="summary-english">
                   <h3>Summary in English</h3>
                   <p>{summary || "Loading summary..."}</p>
@@ -84,8 +110,13 @@ function DisplaySummaryPage() {
                </div>
 
                <div className="procedure">
-                  <h3>Rental Agreement Procedure</h3>
-                  <div dangerouslySetInnerHTML={{ __html: roadmapHtml }} />
+                  <iframe
+                        src={roadmapUrl}
+                        title="Roadmap"
+                        width="100%"
+                        height="500px"
+                        style={{ border: "none" }}
+                    />
                </div>
             </div>
          </div>

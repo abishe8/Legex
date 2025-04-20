@@ -52,8 +52,8 @@ if __name__ == "__main__":
     }
 
     # Specify the path to your template file
-    template_file_path = r"D:\Legex\Legex\backend-auth\templates\Power of attorney.docx"
-    summary_template_file_path = r"D:\Legex\Legex\backend-auth\summary\Power of attorney.txt"
+    template_file_path = r"D:\Legex-Integration\Legex\backend-auth\templates\Power of attorney.docx"
+    summary_template_file_path = r"D:\Legex-Integration\Legex\backend-auth\summary\Power of attorney.txt"
 
     # Check if the summary template file exists
     if not os.path.exists(summary_template_file_path):
@@ -73,23 +73,23 @@ if __name__ == "__main__":
         replace_placeholders(paragraph, data)
 
     # Save the filled-in document
-    output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_power_of_attorney.docx"
+    output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_power_of_attorney.docx"
     doc.save(output_file_path)
 
     # Load the summary template file
     summary = open(summary_template_file_path, 'r').read()
     filled_summary = replace_placeholders_in_text(summary, data)
 
-    summary_output_file_path = r"D:\Legex\Legex\backend-auth\filled_summary\Filled_document_power_of_attorney_summary.txt"
+    summary_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_summary\Filled_document_power_of_attorney_summary.txt"
     with open(summary_output_file_path, 'w') as summary_file:
         summary_file.write(filled_summary)
     
     # Convert the Word document to PDF
-    pdf_output_file_path = r"D:\Legex\Legex\backend-auth\filled_documents\Filled_document_power_of_attorney.pdf"
+    pdf_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_power_of_attorney.pdf"
     convert_to_pdf(output_file_path, pdf_output_file_path)
     
     #roadmap folder path
-    roadmap_folder_path = r"D:\Legex\Legex\backend-auth\Roadmap\Power of Attorney"
+    roadmap_folder_path = r"D:\Legex-Integration\Legex\backend-auth\Roadmap\Power of Attorney"
     # Return the output file path
     print(json.dumps({
             "wordFilePath": output_file_path,
