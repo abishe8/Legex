@@ -71,6 +71,7 @@ function SaleAgreement() {
                   summaryFilePath: response.data.summaryFilePath,
                   pdfFilePath: response.data.pdfFilePath,
                   roadmapFolderPath: response.data.roadmapFolderPath,
+                  translatedSummaryFilePath: response.data.translatedSummaryFilePath,
                   formData,
                   documentType: "sale-agreement",
               },
@@ -380,6 +381,9 @@ function SaleAgreement() {
             >
               <option value="English">English</option>
               <option value="Hindi">Hindi</option>
+              <option value="Tamil">Tamil</option>
+              <option value="Telugu">Telugu</option>
+              <option value="Bengali">Bengali</option>
             </select>
           </div>
         </div>

@@ -55,6 +55,7 @@ function DeedOfSimpleMortgage() {
                     summaryFilePath: response.data.summaryFilePath,
                     pdfFilePath: response.data.pdfFilePath,
                     roadmapFolderPath: response.data.roadmapFolderPath,
+                    translatedSummaryFilePath: response.data.translatedSummaryFilePath,
                     formData,
                     documentType: "mortgage-agreement",
                 },
@@ -213,6 +214,9 @@ function DeedOfSimpleMortgage() {
                                 >
                                     <option value="English">English</option>
                                     <option value="Hindi">Hindi</option>
+                                    <option value="Tamil">Tamil</option>
+                                    <option value="Telugu">Telugu</option>
+                                    <option value="Bengali">Bengali</option>
                                 </select>
                             </div>
                         </div>

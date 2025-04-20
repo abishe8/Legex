@@ -67,6 +67,7 @@ python.on("close", (code) => {
             summaryFilePath: result.summaryFilePath,
             pdfFilePath: result.pdfFilePath || null,
             roadmapFolderPath: result.roadmapFolderPath,
+            translatedSummaryFilePath: result.translatedSummaryFilePath,
         });
     } catch (err) {
         console.error("Failed to parse JSON:", err);

@@ -8,12 +8,13 @@ import axios from "axios";
 
 function DisplaySummaryPage() {
    const location = useLocation();
-   const { wordFilePath, summaryFilePath, pdfFilePath,roadmapFolderPath,formData,documentType} = location.state || {};
+   const { wordFilePath, summaryFilePath, pdfFilePath,roadmapFolderPath,formData,documentType,translatedSummaryFilePath} = location.state || {};
    const navigate = useNavigate();
    const handleEdit = () => {
     navigate(`/${documentType}`, { state: { formData } }); // Navigate back to the form page with formData
 };
    const [summary, setSummary] = useState("");
+   const [transsummary, settransSummary] = useState("");
    const [roadmapHtml, setRoadmapHtml] = useState("");
    
    // Generate URLs
@@ -33,6 +34,12 @@ function DisplaySummaryPage() {
    if (summaryFilePath?.includes("filled_summary")) {
       const summaryRelativePath = summaryFilePath.split("filled_summary")[1].replace(/\\/g, "/");
       summaryUrl = `http://localhost:3000/filled_summary${summaryRelativePath}`;
+   }
+
+   let translatedsummaryUrl = "";
+   if (translatedSummaryFilePath?.includes("filled_summary")) {
+      const translatedsummaryRelativePath = translatedSummaryFilePath.split("filled_summary")[1].replace(/\\/g, "/");
+      translatedsummaryUrl = `http://localhost:3000/filled_summary${translatedsummaryRelativePath}`;
    }
 
    let roadmapUrl = "";
@@ -56,6 +63,23 @@ function DisplaySummaryPage() {
          fetchSummary();
       }
    }, [summaryUrl]);
+
+      // Fetch summary content
+      useEffect(() => {
+         const fetchtransSummary = async () => {
+            try {
+               console.log("Fetching summary from:", translatedsummaryUrl);
+               const response = await axios.get(translatedsummaryUrl);
+               settransSummary(response.data);
+            } catch (error) {
+               console.error("Error fetching summary:", error);
+            }
+         };
+   
+         if (summaryUrl) {
+            fetchtransSummary();
+         }
+      }, [translatedsummaryUrl]);
 
    // Fetch roadmap HTML
    useEffect(() => {
@@ -101,12 +125,15 @@ function DisplaySummaryPage() {
 
                 </div>
                <div className="summary-english">
-                  <h3>Summary in English</h3>
+                  <h3>Summary</h3>
                   <p>{summary || "Loading summary..."}</p>
+                  <br/>
+                  <p>{transsummary || "Loading summary..."}</p>
                </div>
-               {/* <div className="summary-hindi">
-                  <h3>Summary in Hindi</h3>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni magnam natus in expedita quis quaerat illo tenetur porro vero id! Veritatis doloremque nostrum tempora qui. Id quidem praesentium eum, vero dolore voluptatem omnis dolor reiciendis minima quas inventore doloribus temporibus, odit mollitia optio, tenetur alias nobis culpa veritatis. Facilis porro doloribus modi iste odit ipsa recusandae nam mollitia eligendi inventore.</p>
+
+               {/* <div className="summary-english">
+                  <h3>Summary</h3>
+                  <p>{transsummary || "Loading summary..."}</p>
                </div> */}
 
                <div className="procedure">

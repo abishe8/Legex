@@ -3,6 +3,7 @@ import os
 import sys
 import json
 from docx2pdf import convert
+from deep_translator import GoogleTranslator
 
 # Function to replace placeholders with data and apply formatting
 def replace_text_and_format(run, text, font_size=12, bold=False, italic=False):
@@ -83,6 +84,28 @@ if __name__ == "__main__":
     summary_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_summary\Filled_document_power_of_attorney_summary.txt"
     with open(summary_output_file_path, 'w') as summary_file:
         summary_file.write(filled_summary)
+
+        language_code_map = {
+    "hindi": "hi",
+    "tamil": "ta",
+    "telugu": "te",
+    "bengali": "bn",
+    "english": "en"
+    }
+    selected_language = input_data.get("select-language", "english").lower()
+    target_lang_code = language_code_map.get(selected_language, "en")
+
+    translated_summary = filled_summary
+    if target_lang_code != "en":
+        try:
+            translated_summary = GoogleTranslator(source='auto', target=target_lang_code).translate(filled_summary)
+        except Exception as e:
+            translated_summary = f"Translation failed: {str(e)}"
+
+    # Save the translated summary
+    translated_summary_path = rf"D:\Legex-Integration\Legex\backend-auth\filled_summary\Translated_power_of_attorney_{selected_language}.txt"
+    with open(translated_summary_path, 'w', encoding='utf-8') as file:
+        file.write(translated_summary)
     
     # Convert the Word document to PDF
     pdf_output_file_path = r"D:\Legex-Integration\Legex\backend-auth\filled_documents\Filled_document_power_of_attorney.pdf"
@@ -95,5 +118,6 @@ if __name__ == "__main__":
             "wordFilePath": output_file_path,
             "summaryFilePath": summary_output_file_path,
             "pdfFilePath":pdf_output_file_path,
-            "roadmapFolderPath": roadmap_folder_path
+            "roadmapFolderPath": roadmap_folder_path,
+            "translatedSummaryFilePath": translated_summary_path,
         }))

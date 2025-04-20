@@ -60,6 +60,7 @@ function GrantCopyrightInComputerSoftware() {
                 summaryFilePath: response.data.summaryFilePath,
                 pdfFilePath: response.data.pdfFilePath,
                 roadmapFolderPath: response.data.roadmapFolderPath,
+                translatedSummaryFilePath: response.data.translatedSummaryFilePath,
                 formData,
                 documentType: "agreement-to-grant-copyright-in-computer-software",
             },
@@ -222,9 +223,11 @@ function GrantCopyrightInComputerSoftware() {
                    <div>
                        <label htmlFor="select-language">Select Language To Generate Summary:</label>
                        <select name="select-language" id="select-language" value={formData["select-language"]} onChange={handleChange}>
-                           <option value="English">English</option>
-                           <option value="Hindi">Hindi</option>
-                       </select>
+                                                               <option value="English">English</option>
+                                    <option value="Hindi">Hindi</option>
+                                    <option value="Tamil">Tamil</option>
+                                    <option value="Telugu">Telugu</option>
+                                    <option value="Bengali">Bengali</option></select>
                    </div>
                </div>
                <button className="submit-btn" type="submit" disabled={isSubmitting}>

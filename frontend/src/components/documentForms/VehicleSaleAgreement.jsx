@@ -60,6 +60,7 @@ function VehicleSaleAgreement() {
                     summaryFilePath: response.data.summaryFilePath,
                     pdfFilePath: response.data.pdfFilePath,
                     roadmapFolderPath: response.data.roadmapFolderPath,
+                    translatedSummaryFilePath: response.data.translatedSummaryFilePath,
                     formData,
                     documentType: "motor-vehicle-sale-agreement",
                 },
@@ -256,9 +257,11 @@ function VehicleSaleAgreement() {
                             value={formData["select-language"]}
                             onChange={handleChange}
                         >
-                            <option value="English">English</option>
-                            <option value="Hindi">Hindi</option>
-                        </select>
+                                    <option value="English">English</option>
+                                    <option value="Hindi">Hindi</option>
+                                    <option value="Tamil">Tamil</option>
+                                    <option value="Telugu">Telugu</option>
+                                    <option value="Bengali">Bengali</option></select>
                     </div>
                 </div>
                 <button className="submit-btn" type="submit" disabled={isSubmitting}>
