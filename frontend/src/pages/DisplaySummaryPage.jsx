@@ -5,6 +5,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
+import Chatbot from "../components/chatbot";
 
 function DisplaySummaryPage() {
    const location = useLocation();
@@ -135,7 +136,7 @@ function DisplaySummaryPage() {
                   <h3>Summary</h3>
                   <p>{transsummary || "Loading summary..."}</p>
                </div> */}
-
+               {pdfUrl && <Chatbot pdfUrl={pdfUrl} />}
                <div className="procedure">
                   <iframe
                         src={roadmapUrl}

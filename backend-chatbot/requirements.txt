@@ -1,0 +1,6 @@
+Flask
+PyPDF2
+langchain
+langchain-openai
+dotenv
+flask-cors
