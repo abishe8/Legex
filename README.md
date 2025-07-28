@@ -2,3 +2,4 @@ Embarking on an audacious mission, we're poised to revolutionize the legal docum
 
 our app's features will be : 1.Acquire user inputs to tailor the documentation generation process to meticulously format the document using a python script 2.for better understanding the legal procedures, an intuitive roadmap ensures a smooth user experience using html,css 3.Provide a comprehensive summary using our AI model and translates it in different languages to ensure understanding for a wider audience 4.Security Focus: We prioritize confidentiality, integrity, availability, and data privacy. Amazon RDS encryption safeguards our database, complemented by Google OAuth2 and JWT authentication for user security
 
+Important Note : this product has been patent filed
